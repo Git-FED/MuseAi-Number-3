@@ -1,5 +1,7 @@
 # Muse Number 3
 
+<img width="1281" height="701" alt="Screenshot 2026-10-22 192025" src="https://github.com/user-attachments/assets/0a9f9d6a-c4e7-4308-adb3-70ba4f316968" />
+
 **Three separate Muse sessions, one small Android app.**
 
 > Keep three Muse logins in their own spaces, then switch between them without the browser-tab circus.
