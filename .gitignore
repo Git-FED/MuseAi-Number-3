@@ -1,0 +1,19 @@
+# NEVER commit a signing keystore
+*.keystore
+*.jks
+keystore/
+app/release.keystore
+key.properties
+
+# Local machine / build output
+local.properties
+.gradle/
+*/build/
+build/
+dist/
+*.apk
+*.aab
+.idea/
+*.iml
+captures/
+.DS_Store
