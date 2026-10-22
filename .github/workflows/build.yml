@@ -1,0 +1,51 @@
+name: Android build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Make wrapper executable
+        run: chmod +x ./gradlew
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muse-number-three-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Decode signing keystore
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > app/release.keystore
+      - name: Build signed release APK
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          MUSE3_KEYSTORE: app/release.keystore
+          MUSE3_KEYSTORE_PASS: ${{ secrets.MUSE3_KEYSTORE_PASS }}
+          MUSE3_KEY_ALIAS: ${{ secrets.MUSE3_KEY_ALIAS }}
+          MUSE3_KEY_PASS: ${{ secrets.MUSE3_KEY_PASS }}
+        run: ./gradlew assembleRelease
+      - name: Create draft GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: app/build/outputs/apk/release/app-release.apk
+      - name: Remove keystore
+        if: always()
+        run: rm -f app/release.keystore
