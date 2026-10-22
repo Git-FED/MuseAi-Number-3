@@ -1,0 +1,20 @@
+{
+  "bundle": "face-muse-memory-templates",
+  "version": 2,
+  "updated_at": "2026-10-21T00:00:00Z",
+  "personal_data": false,
+  "load_order": ["identity.md", "soul.md", "memory.md", "standing-rules.md", "current-handoff.md"],
+  "files": [
+    {"path":"identity.md","kind":"identity","status":"draft"},
+    {"path":"soul.md","kind":"rules","status":"draft"},
+    {"path":"memory.md","kind":"semantic_memory","status":"draft"},
+    {"path":"standing-rules.md","kind":"rules","status":"active"},
+    {"path":"user-preferences.md","kind":"semantic_memory","status":"draft"},
+    {"path":"current-handoff.md","kind":"state","status":"draft"},
+    {"path":"tasks.md","kind":"state","status":"active"},
+    {"path":"decisions.md","kind":"decisions","status":"active"},
+    {"path":"lessons.md","kind":"lessons","status":"active"},
+    {"path":"avatar.md","kind":"avatar","status":"draft"},
+    {"path":"events.jsonl","kind":"event_log","status":"active"}
+  ]
+}

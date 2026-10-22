@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Face Muse icon">
+  <rect width="64" height="64" rx="18" fill="#151b35"/>
+  <circle cx="32" cy="31" r="19" fill="#ffca5c"/>
+  <circle cx="25" cy="29" r="3" fill="#151b35"/>
+  <circle cx="39" cy="29" r="3" fill="#151b35"/>
+  <path d="M23 38c5 5 13 5 18 0" fill="none" stroke="#151b35" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32 7v8M8 32h8M48 32h8" stroke="#56d6c9" stroke-width="4" stroke-linecap="round"/>
+</svg>
