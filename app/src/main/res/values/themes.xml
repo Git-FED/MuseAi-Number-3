@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MuseNumberThree" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/muse_orange</item>
+        <item name="colorPrimaryVariant">@color/muse_orange_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:windowBackground">@color/muse_cream</item>
+    </style>
+    <style name="Widget.MuseNumberThree.SwitcherButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/muse_slot_unselected</item>
+        <item name="android:textColor">@color/muse_ink</item>
+    </style>
+</resources>

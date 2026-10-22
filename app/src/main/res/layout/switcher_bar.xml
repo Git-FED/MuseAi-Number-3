@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.fedos.musenumberthree.SwitcherBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:background="@drawable/switcher_bar_background"
+    android:elevation="8dp" android:padding="4dp">
+    <!-- Tabs are built at runtime by SwitcherBar.kt from SlotConfig — do not hardcode tab views here. -->
+    <LinearLayout android:id="@+id/switcher_tab_row" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="horizontal" android:weightSum="3" />
+</com.fedos.musenumberthree.SwitcherBar>

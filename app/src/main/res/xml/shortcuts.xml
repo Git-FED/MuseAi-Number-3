@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- MainActivity parses muse3://slot/1, /2, /3 and routes through SlotNavigator. -->
+    <shortcut android:shortcutId="slot_1" android:enabled="true" android:icon="@drawable/ic_slot_1" android:shortcutShortLabel="@string/shortcut_slot_1" android:shortcutLongLabel="@string/shortcut_slot_1_long">
+        <intent android:action="android.intent.action.VIEW" android:targetPackage="com.fedos.musenumberthree" android:targetClass="com.fedos.musenumberthree.MainActivity" android:data="muse3://slot/1" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut android:shortcutId="slot_2" android:enabled="true" android:icon="@drawable/ic_slot_2" android:shortcutShortLabel="@string/shortcut_slot_2" android:shortcutLongLabel="@string/shortcut_slot_2_long">
+        <intent android:action="android.intent.action.VIEW" android:targetPackage="com.fedos.musenumberthree" android:targetClass="com.fedos.musenumberthree.MainActivity" android:data="muse3://slot/2" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut android:shortcutId="slot_3" android:enabled="true" android:icon="@drawable/ic_slot_3" android:shortcutShortLabel="@string/shortcut_slot_3" android:shortcutLongLabel="@string/shortcut_slot_3_long">
+        <intent android:action="android.intent.action.VIEW" android:targetPackage="com.fedos.musenumberthree" android:targetClass="com.fedos.musenumberthree.MainActivity" android:data="muse3://slot/3" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

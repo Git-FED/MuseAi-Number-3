@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palette placeholders in the Muse family colors — Git-FED restyles here. -->
+    <color name="muse_cream">#FAF6F0</color>
+    <color name="muse_orange">#D97757</color>
+    <color name="muse_orange_dark">#B85C38</color>
+    <color name="muse_ink">#1F1B16</color>
+    <color name="muse_slot_unselected">#E8E0D4</color>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muse Number 3</string>
+    <string name="unsupported_message">This phone's WebView can't keep 3 Muse logins separate, so Muse Number 3 can't run safely here. Update Android System WebView or Chrome, then try again.</string>
+    <string name="slot_error_title">This Muse could not load</string>
+    <string name="slot_error_body">Check your connection, then tap to retry.</string>
+    <string name="shortcut_slot_1">Muse 1</string>
+    <string name="shortcut_slot_2">Muse 2</string>
+    <string name="shortcut_slot_3">Muse 3</string>
+    <string name="shortcut_slot_1_long">Open Muse 1</string>
+    <string name="shortcut_slot_2_long">Open Muse 2</string>
+    <string name="shortcut_slot_3_long">Open Muse 3</string>
+</resources>

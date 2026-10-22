@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><shape android:shape="rectangle"><solid android:color="@color/muse_cream"/><corners android:topLeftRadius="12dp" android:topRightRadius="12dp"/></shape></item>
+    <item android:gravity="top"><shape android:shape="rectangle"><size android:height="1dp"/><solid android:color="@color/muse_slot_unselected"/></shape></item>
+</layer-list>

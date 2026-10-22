@@ -3,84 +3,158 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Face Muse is a simple, reusable memory template for AI agents.">
-  <title>Face Muse — AI Agent Memory Template</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="alternate icon" href="./favicon.svg">
-  <link rel="manifest" href="./site.webmanifest">
-  <link rel="stylesheet" href="./styles.css">
+  <meta name="theme-color" content="#FAF6F0">
+  <meta name="description" content="Muse Number 3 keeps three separate Muse browsing sessions in one tidy Android app. Pick a slot, keep sessions apart, and switch without the tab circus.">
+  <meta name="keywords" content="Muse Number 3, Android app, Muse sessions, separate browser profiles, session switcher">
+  <title>Muse Number 3 — Three sessions, one app</title>
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="hero">
-    <nav aria-label="Primary navigation"><a class="brand" href="./">Face Muse</a><span><a class="pill" href="./social-cards.html">Social cards</a> <a class="pill" href="https://github.com/Git-FED/Meta-s-Muse-AI-Starter-Kit">View repository</a></span></nav>
-    <div class="ticker" aria-label="Project highlights">
-      <div class="ticker-track"><span>OPEN SOURCE MEMORY</span><span>PRIVACY BY DEFAULT</span><span>BUILT FOR BETTER HANDOFFS</span><span>OPEN SOURCE MEMORY</span><span>PRIVACY BY DEFAULT</span><span>BUILT FOR BETTER HANDOFFS</span></div>
+  <a class="skip-link" href="#main">Skip to the good stuff</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="Muse Number 3 home">
+        <span class="brand-mark" aria-hidden="true">3</span>
+        <span class="brand-name">Muse <span>No. 3</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#slots">The slots</a>
+        <a href="#discord">Find us</a>
+        <a class="nav-cta" href="#support">Support</a>
+      </nav>
     </div>
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">OPEN • SIMPLE • SAFE</p>
-        <h1>Give your AI agent a memory it can actually carry.</h1>
-        <p class="lede">A public starter template for durable rules, preferences, handoffs, tasks, decisions, and events — without shipping personal data or secrets.</p>
-        <a class="button button-arrow" href="https://github.com/Git-FED/Meta-s-Muse-AI-Starter-Kit/releases/latest">Download templates v0.2.0 <span aria-hidden="true">↗</span></a>
+    <div class="ticker" aria-label="Three sessions. One tap away. A little less tab drama.">
+      <div class="ticker-track" aria-hidden="true">
+        <div class="ticker-group"><span>THREE SESSIONS</span><i>✳</i><span>ONE APP</span><i>✳</i><span>LESS TAB DRAMA</span><i>✳</i><span>SWITCH WITH A TAP</span><i>✳</i></div>
+        <div class="ticker-group"><span>THREE SESSIONS</span><i>✳</i><span>ONE APP</span><i>✳</i><span>LESS TAB DRAMA</span><i>✳</i><span>SWITCH WITH A TAP</span><i>✳</i></div>
       </div>
-      <div class="hero-art-wrap"><img class="hero-art" src="./assets/promo/face-muse-hero.png" alt="Comical robot librarian organizing colorful memory cards into folders"><span class="art-sticker" aria-hidden="true">MEMORY<br>THAT MOVES</span></div>
     </div>
   </header>
 
-  <main>
-    <section class="intro reveal"><p class="eyebrow">THE IDEA</p><h2>Keep the useful context. Leave the baggage.</h2><p>Face Muse separates durable memory from current state, event history, media, archives, and credentials. Copy the template, fill in the placeholders, and keep the rules visible and reviewable.</p></section>
-    <section class="cards">
-      <article class="feature-card reveal"><img src="./assets/promo/face-muse-privacy.png" alt="Comical robot locking a secret key in a vault"><h3>Privacy by default</h3><p>No tokens, passwords, webhooks, or environment files belong in the template.</p></article>
-      <article class="feature-card reveal"><img src="./assets/promo/face-muse-personalities.png" alt="Comical lineup of expressive robot personalities around a memory notebook"><h3>Personalities later</h3><p>Style presets can change tone and verbosity without overriding shared safety rules.</p></article>
-    </section>
-
-    <section class="support reveal" id="support">
-      <p class="eyebrow">SUPPORT THE PROJECT</p>
-      <h2>Help keep the template open and improving.</h2>
-      <p class="support-intro">Payments are protected behind a quick 18+ age confirmation. Community access is always open.</p>
-      <div class="support-grid">
-        <article class="support-card payment-card">
-          <div class="card-kicker">DIRECT SUPPORT</div>
-          <h3>PayPal</h3>
-          <p>Support through the recurring PayPal plan.</p>
-          <div class="payment-area" data-payment-area>
-            <div class="payment-locked"><span class="lock-mark" aria-hidden="true">✦</span><strong>18+ confirmation required</strong><span>Confirm your age to view payment options.</span><button class="text-button" type="button" data-open-age-gate>Unlock payment</button></div>
-            <div class="payment-content" hidden><div id="paypal-button-container-P-4FD24238VX4902214NK2XP2Y"></div></div>
-          </div>
-        </article>
-        <article class="support-card payment-card">
-          <div class="card-kicker">DIRECT SUPPORT</div>
-          <h3>GitHub Sponsors</h3>
-          <p>Support the work directly through GitHub.</p>
-          <div class="payment-area" data-payment-area>
-            <div class="payment-locked"><span class="lock-mark" aria-hidden="true">✦</span><strong>18+ confirmation required</strong><span>Confirm your age to view payment options.</span><button class="text-button" type="button" data-open-age-gate>Unlock payment</button></div>
-            <div class="payment-content sponsor-content" hidden><a class="button sponsor-button" href="https://github.com/sponsors/Git-FED" target="_blank" rel="noopener">Open GitHub Sponsors <span aria-hidden="true">↗</span></a></div>
-          </div>
-        </article>
-        <article class="support-card discord-card">
-          <div class="card-kicker">COMMUNITY</div>
-          <h3>Join the Discord</h3>
-          <p>Follow the project and connect with the community.</p>
-          <div class="discord-frame-wrap"><iframe src="https://discord.com/widget?id=1400235929154879490&amp;theme=dark" title="Face Muse Discord community" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe></div>
-        </article>
+  <main id="main">
+    <section class="hero section-wrap" id="top">
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow"><span class="eyebrow-dot"></span> A tiny bit of order for your Muse sessions</p>
+        <h1>Three sessions.<br><em>One less</em> tab circus.</h1>
+        <p class="hero-lede">Muse Number 3 puts three separate Muse browsing slots in one Android app—so each session can mind its own business.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#slots">Meet your slots <span aria-hidden="true">↘</span></a>
+          <span class="micro-note">Made for Android · built around Muse</span>
+        </div>
+        <div class="hero-stamp" aria-hidden="true"><span>NO. 3</span><b>same app,<br>separate worlds</b></div>
+      </div>
+      <div class="hero-art" data-reveal data-delay="120">
+        <div class="art-sun" aria-hidden="true"></div>
+        <img class="promo-art hero-image" src="assets/promo/hero-three-muses.svg" data-managed-src="/manus-storage/async-images/xgCLEz7MthQK18Kt0K8cDD/image-1.webp" alt="Three cheerful browser-window characters gathered around a phone" width="760" height="560">
+        <span class="art-caption">Three little windows.<br>No identity crisis.</span>
       </div>
     </section>
 
-    <section class="steps reveal"><p class="eyebrow">QUICKSTART</p><h2>Three steps to a cleaner handoff.</h2><ol><li><strong>Copy</strong> the template into an agent workspace.</li><li><strong>Customize</strong> only the files you need.</li><li><strong>Review</strong> the handoff before every major transfer.</li></ol></section>
-  </main>
-  <footer><span>Face Muse Memory Template · MIT</span><a href="https://github.com/Git-FED/Meta-s-Muse-AI-Starter-Kit">Read the documentation</a></footer>
+    <section class="intro-band" aria-label="Product summary">
+      <div class="section-wrap intro-inner">
+        <p class="eyebrow">The short version</p>
+        <p class="intro-line">One familiar place to launch <span>three separate sessions.</span></p>
+      </div>
+    </section>
 
-  <div class="age-modal" data-age-modal hidden>
-    <div class="age-dialog" role="dialog" aria-modal="true" aria-labelledby="age-title">
-      <button class="modal-close" type="button" data-close-age-gate aria-label="Close age confirmation">×</button>
-      <span class="modal-spark" aria-hidden="true">✦</span>
-      <p class="eyebrow">ONE QUICK CHECK</p>
-      <h2 id="age-title">Are you 18 or older?</h2>
-      <p>Payment options on this page are intended for adults. Confirm your age to continue.</p>
-      <div class="modal-actions"><button class="button" type="button" data-confirm-age>Yes, unlock payments</button><button class="quiet-button" type="button" data-close-age-gate>No, go back</button></div>
-      <small>Your choice is saved only in this browser. No personal data is collected.</small>
+    <section class="features section-wrap" id="slots">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">Three slots, zero tab drama</p>
+        <h2>They can share a screen.<br><em>They don't share a session.</em></h2>
+      </div>
+
+      <article class="feature-row feature-first" data-reveal>
+        <div class="feature-art feature-art-peach">
+          <img class="promo-art" src="assets/promo/isolated-sessions.svg" data-managed-src="/manus-storage/async-images/xgCLEz7MthQK18Kt0K8cDD/image-2.webp" alt="Three separate browser windows, each minding its own login" width="640" height="480" loading="lazy">
+          <span class="feature-number" aria-hidden="true">01</span>
+        </div>
+        <div class="feature-copy">
+          <p class="eyebrow">Keep the worlds apart</p>
+          <h3>Separate slots.<br>Separate sessions.</h3>
+          <p>Give each Muse slot its own browsing space. Less “wait, which account is this?” and more getting on with the thing you opened it for.</p>
+        </div>
+      </article>
+
+      <article class="feature-row feature-reverse" data-reveal>
+        <div class="feature-art feature-art-lilac">
+          <img class="promo-art" src="assets/promo/switching-is-easy.svg" data-managed-src="/manus-storage/async-images/xgCLEz7MthQK18Kt0K8cDD/image-3.webp" alt="Three playful tabs circling a phone with one slot highlighted" width="640" height="480" loading="lazy">
+          <span class="feature-number" aria-hidden="true">02</span>
+        </div>
+        <div class="feature-copy">
+          <p class="eyebrow">Move without the maze</p>
+          <h3>Tap a slot.<br>You're back in.</h3>
+          <p>Jump between your three saved places from one small launchpad. No browser-window juggling act required.</p>
+        </div>
+      </article>
+
+      <div class="slot-strip" data-reveal aria-label="Three Muse slots">
+        <span class="slot-pill"><b>01</b> Muse slot one</span>
+        <span class="slot-pill"><b>02</b> Muse slot two</span>
+        <span class="slot-pill"><b>03</b> Muse slot three</span>
+        <span class="slot-doodle" aria-hidden="true">✳</span>
+      </div>
+    </section>
+
+    <section class="discord-section" id="discord">
+      <div class="section-wrap discord-inner" data-reveal>
+        <p class="eyebrow">The people corner</p>
+        <h2>Come say <em>hello-ish.</em></h2>
+        <p class="section-lede">The community widget sits right in the middle, where it can’t wander off.</p>
+        <div class="discord-shell">
+          <div class="discord-placeholder" data-discord-placeholder>
+            <span class="discord-bubble" aria-hidden="true">…</span>
+            <p><strong>The Discord widget is waiting for its address.</strong><br>Add your server ID in <code>config.js</code> to switch it on.</p>
+          </div>
+          <div class="discord-frame-wrap" data-discord-frame-wrap hidden></div>
+        </div>
+        <a class="discord-invite" data-discord-invite hidden rel="noopener noreferrer" target="_blank">Open the Discord invite <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="support-section section-wrap" id="support">
+      <div class="support-card" data-reveal>
+        <div>
+          <p class="eyebrow">Keep the little app going</p>
+          <h2>Support, if the setup is ready.</h2>
+          <p>Payment options stay tucked away until a destination is configured and you confirm you meet the age requirement.</p>
+        </div>
+        <div class="support-action">
+          <p class="payment-note" data-payment-unavailable>Payment options are not configured yet.</p>
+          <button class="button button-orange" type="button" data-age-gate-open hidden>Check age to reveal payment option</button>
+          <a class="button button-dark" data-payment-link hidden rel="noopener noreferrer" target="_blank">Continue to payment <span aria-hidden="true">↗</span></a>
+          <p class="payment-status" data-payment-status aria-live="polite"></p>
+        </div>
+        <span class="support-spark" aria-hidden="true">✳</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-wrap footer-inner">
+      <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true">3</span><span class="brand-name">Muse <span>No. 3</span></span></a>
+      <p>Three sessions, one small Android app.</p>
+      <a href="#top" class="back-top">Back to top ↑</a>
     </div>
-  </div>
-  <script src="./script.js" defer></script>
+  </footer>
+
+  <dialog class="age-dialog" data-age-dialog aria-labelledby="age-title" aria-describedby="age-description">
+    <div class="age-dialog-card">
+      <button class="dialog-close" type="button" data-age-close aria-label="Close age check">×</button>
+      <p class="eyebrow">One quick check</p>
+      <h2 id="age-title">Are you at least <em data-required-age>18</em>?</h2>
+      <p id="age-description">Confirm your age to reveal the configured payment link. This is a self-attestation, not identity verification.</p>
+      <div class="age-actions">
+        <button class="button button-dark" type="button" data-age-confirm>Yes, continue</button>
+        <button class="button button-quiet" type="button" data-age-decline>No, go back</button>
+      </div>
+    </div>
+  </dialog>
 </body>
 </html>
