@@ -1,7 +1,5 @@
 # Muse Number 3
 
-<img width="1281" height="701" alt="Screenshot 2026-10-22 192025" src="https://github.com/user-attachments/assets/7c20d5c7-a491-4a20-9935-75056afc1a60" />
-
 **Three separate Muse sessions, one small Android app.**
 
 > Keep three Muse logins in their own spaces, then switch between them without the browser-tab circus.
@@ -10,15 +8,11 @@
 
 ## Why this exists
 
-<img width="1284" height="699" alt="Screenshot 2026-10-22 192032" src="https://github.com/user-attachments/assets/12fecd23-2411-4aee-99c5-7fd4dd9be9fd" />
-
 When three Muse accounts live in one browser, it is easy to lose track of which session is active. Cookies, open chats, and account state all end up competing for the same space. Switching becomes a memory test instead of a useful workflow.
 
 Muse Number 3 makes the boundary explicit: one Android app, three named WebView slots, three AndroidX WebKit Multi-Profile sessions. Each slot owns its own cookies and web storage. Switching changes visibility, not the page underneath, so a chat can stay open while you move to another slot.
 
 That separation is intentional. If a device cannot provide WebView Multi-Profile support, the app stops at an unsupported-device screen instead of silently merging sessions.
-
-<img width="1281" height="698" alt="Screenshot 2026-10-22 195208" src="https://github.com/user-attachments/assets/22ab6c72-e5b0-4f3a-99d0-1936373e9bd5" />
 
 ## See it work
 
@@ -54,15 +48,11 @@ python3 -m http.server 8000 --directory site
 
 ### Prepare the Android build
 
-The Android app needs Java 17+, an Android SDK, and generated Gradle wrapper files. The archive intentionally does not include the wrapper or a checked-in `local.properties` file.
+The Android app needs Java 17+ and an Android SDK. The Gradle 9.6.0 wrapper is committed at the repository root; a machine-specific `local.properties` file is not checked in.
 
 ```sh
 # check prerequisites; this does not install anything
 ./scripts/install-deps.sh
-
-# from a configured Android Studio / Gradle environment
-# generate the wrapper once, then commit the generated wrapper files
-gradle wrapper
 
 # build a debug APK
 ./scripts/build.sh
@@ -76,9 +66,6 @@ app/build/outputs/apk/debug/app-debug.apk
 
 There is no published download yet. Release signing and the tag-based CI release flow are documented in [`docs/SIGNING.md`](docs/SIGNING.md).
 
-<img width="1376" height="768" alt="Muse_Number_3_Overview_-_Slide_2" src="https://github.com/user-attachments/assets/9227c04d-264b-4cd8-bd5c-146654e23d1d" />
-
-
 ### Test
 
 There are no automated tests in v1. The important test is manual because it requires three real logins on a WebView provider that supports Multi-Profile:
@@ -91,8 +78,6 @@ There are no automated tests in v1. The important test is manual because it requ
 ```
 
 Use the complete checklist in [`docs/QA.md`](docs/QA.md), including swipe switching, launcher shortcuts, rotation, relaunch, logout isolation, and the unsupported-device path.
-
-<img width="1279" height="697" alt="Screenshot 2026-10-22 195215" src="https://github.com/user-attachments/assets/83a83cf9-2c8a-48d8-b51e-fb53d4c26823" />
 
 ## How the app works
 
@@ -111,8 +96,6 @@ SlotDef(3, "Muse 3", "https://muse.ai", "muse-slot-3")
 
 Those three URLs are placeholders, not three distinct production instances.
 
-<img width="1283" height="699" alt="Screenshot 2026-10-22 195157" src="https://github.com/user-attachments/assets/42b428c7-ed4d-41f3-8d76-e594fd46dbad" />
-
 ## Project map
 
 ```text
@@ -130,8 +113,6 @@ docs/SESSION-BEHAVIOR.md     Profile and persistence invariants
 .github/workflows/build.yml  Debug CI and draft release workflow
 ```
 
-<img width="1282" height="699" alt="Screenshot 2026-10-22 192047" src="https://github.com/user-attachments/assets/58672d1c-e699-4d8b-be17-a75ab410edc1" />
-
 ## Deployment notes
 
 The static promo page can be published from `site/` as-is, or from the repository root through the forwarding [`index.html`](index.html). For Cloudflare Pages Git integration, use `exit 0` as the build command and `site` as the build output directory. For a direct upload, run `./scripts/deploy-pages.sh` (equivalent to `npx wrangler pages deploy site`). Do not use `npx wrangler deploy`; that is the Worker command and is what causes a missing Worker entry-point error here. GitHub Pages is **not enabled automatically**: there is no Pages workflow in this repository. Full instructions are in [`site/DEPLOYMENT.md`](site/DEPLOYMENT.md).
@@ -143,6 +124,3 @@ Before publishing the site, configure only public destinations in [`site/config.
 The checked-in [`LICENSE`](LICENSE) is a proprietary draft and says its terms are still to be finalized. Treat the project as all rights reserved until the owner replaces that draft with final terms.
 
 Questions and support: **museai@fedpromptly.com**
-
-<img width="1281" height="702" alt="Screenshot 2026-10-23 112745" src="https://github.com/user-attachments/assets/176a8179-6acc-4645-85e1-ebb08a61c222" />
-
