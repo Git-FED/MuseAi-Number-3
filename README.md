@@ -76,6 +76,9 @@ app/build/outputs/apk/debug/app-debug.apk
 
 There is no published download yet. Release signing and the tag-based CI release flow are documented in [`docs/SIGNING.md`](docs/SIGNING.md).
 
+<img width="1376" height="768" alt="Muse_Number_3_Overview_-_Slide_2" src="https://github.com/user-attachments/assets/9227c04d-264b-4cd8-bd5c-146654e23d1d" />
+
+
 ### Test
 
 There are no automated tests in v1. The important test is manual because it requires three real logins on a WebView provider that supports Multi-Profile:
@@ -88,6 +91,8 @@ There are no automated tests in v1. The important test is manual because it requ
 ```
 
 Use the complete checklist in [`docs/QA.md`](docs/QA.md), including swipe switching, launcher shortcuts, rotation, relaunch, logout isolation, and the unsupported-device path.
+
+<img width="1279" height="697" alt="Screenshot 2026-10-22 195215" src="https://github.com/user-attachments/assets/83a83cf9-2c8a-48d8-b51e-fb53d4c26823" />
 
 ## How the app works
 
@@ -106,6 +111,8 @@ SlotDef(3, "Muse 3", "https://muse.ai", "muse-slot-3")
 
 Those three URLs are placeholders, not three distinct production instances.
 
+<img width="1283" height="699" alt="Screenshot 2026-10-22 195157" src="https://github.com/user-attachments/assets/42b428c7-ed4d-41f3-8d76-e594fd46dbad" />
+
 ## Project map
 
 ```text
@@ -122,6 +129,8 @@ docs/SIGNING.md              Release keystore and CI signing rules
 docs/SESSION-BEHAVIOR.md     Profile and persistence invariants
 .github/workflows/build.yml  Debug CI and draft release workflow
 ```
+
+<img width="1282" height="699" alt="Screenshot 2026-10-22 192047" src="https://github.com/user-attachments/assets/58672d1c-e699-4d8b-be17-a75ab410edc1" />
 
 ## Deployment notes
 
