@@ -9,10 +9,6 @@ on:
 permissions:
   contents: write
 
-env:
-  # Must match the Gradle version required by your Android project.
-  GRADLE_VERSION: '8.9'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,15 +41,14 @@ jobs:
             )
 
             if [ "${#PROJECT_DIRS[@]}" -eq 0 ]; then
-              echo "::error::No Gradle settings file found. Upload your complete Android project, not only this workflow."
-              echo "Repository files:"
+              echo "::error::No Android Gradle project found."
               find "$GITHUB_WORKSPACE" -maxdepth 3 -type f \
                 -not -path '*/.git/*'
               exit 1
             fi
 
             if [ "${#PROJECT_DIRS[@]}" -gt 1 ]; then
-              echo "::error::Multiple Gradle projects found. The Android project directory must be selected explicitly."
+              echo "::error::Multiple Gradle projects found. Specify the Android project directory."
               printf '%s\n' "${PROJECT_DIRS[@]}"
               exit 1
             fi
@@ -64,10 +59,25 @@ jobs:
           echo "Android project: $PROJECT_DIR"
           echo "dir=$PROJECT_DIR" >> "$GITHUB_OUTPUT"
 
-      - name: Install Gradle
+      - name: Install Gradle 9.6.0
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: ${{ env.GRADLE_VERSION }}
+          gradle-version: '9.6.0'
+
+      - name: Verify Gradle version
+        shell: bash
+        run: |
+          echo "Workflow commit: $GITHUB_SHA"
+          echo "Gradle executable:"
+          command -v gradle
+
+          VERSION_OUTPUT="$(gradle --version)"
+          printf '%s\n' "$VERSION_OUTPUT"
+
+          if ! grep -Fxq 'Gradle 9.6.0' <<< "$VERSION_OUTPUT"; then
+            echo "::error::Expected Gradle 9.6.0. Stopping before build."
+            exit 1
+          fi
 
       - name: Build debug APK
         working-directory: ${{ steps.project.outputs.dir }}
@@ -117,4 +127,5 @@ jobs:
         if: always() && steps.project.outputs.dir != ''
         env:
           PROJECT_DIR: ${{ steps.project.outputs.dir }}
+        shell: bash
         run: rm -f "$PROJECT_DIR/app/release.keystore"
