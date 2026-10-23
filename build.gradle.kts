@@ -1,5 +1,4 @@
 plugins {
-    // Stable versions checked 2026-10-22; verify compatibility with the owner's Android Studio/Gradle setup.
+    // AGP 9.4.0 requires Gradle 9.6+ and provides built-in Kotlin support.
     id("com.android.application") version "9.4.0" apply false
-    id("org.jetbrains.kotlin.android") version "2.4.21" apply false
 }
