@@ -1,8 +1,5 @@
 package com.fedos.musenumberthree
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -10,7 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.net.http.SslError
 
-class MuseWebViewClient(private val slotHost: String) : WebViewClient() {
+class MuseWebViewClient : WebViewClient() {
     private var failedMainFrameUrl: String? = null
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -18,14 +15,14 @@ class MuseWebViewClient(private val slotHost: String) : WebViewClient() {
             failedMainFrameUrl?.let(view::loadUrl)
             return true
         }
-        val host = request.url.host.orEmpty().lowercase()
-        // Keep the configured Muse host and Muse AI auth redirects inside this slot's profile.
-        if (host == slotHost.lowercase() || host == "muse.ai" || host.endsWith(".muse.ai")) return false
-        // Send unrelated links to the regular browser, which is a separate session.
-        return try {
-            view.context.startActivity(Intent(Intent.ACTION_VIEW, request.url).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            true
-        } catch (_: ActivityNotFoundException) { true }
+        // Keep every web URL inside this slot. Muse may use auth, asset, or redirect
+        // hosts outside the configured starting host; sending those URLs to the
+        // regular browser would break the slot's isolated session.
+        if (request.url.scheme == "http" || request.url.scheme == "https") return false
+
+        // Do not hand custom schemes to another app. The only custom scheme owned by
+        // this app is muse3retry, handled above.
+        return true
     }
 
     override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {

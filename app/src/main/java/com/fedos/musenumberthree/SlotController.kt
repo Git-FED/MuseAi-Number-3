@@ -24,7 +24,7 @@ class SlotController(
 ) {
     val slots: List<MuseSlot> = SlotConfig.SLOTS.mapIndexed { index, def ->
         val chrome = MuseWebChromeClient(fileChooserLauncher, fileCallbackHolder) { progress -> onProgress(index, progress) }
-        MuseSlot(def, activity, MuseWebViewClient(Uri.parse(def.url).host.orEmpty()), chrome).also { slot ->
+        MuseSlot(def, activity, MuseWebViewClient(), chrome).also { slot ->
             container.addView(slot.webView, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         }
     }
