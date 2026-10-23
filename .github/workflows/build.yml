@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # Must match the Gradle version required by your Android project.
+  GRADLE_VERSION: '8.9'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,39 +31,47 @@ jobs:
         id: project
         shell: bash
         run: |
-          if [ -f "$GITHUB_WORKSPACE/gradlew" ]; then
+          if [ -f "$GITHUB_WORKSPACE/settings.gradle" ] || \
+             [ -f "$GITHUB_WORKSPACE/settings.gradle.kts" ]; then
             PROJECT_DIR="$GITHUB_WORKSPACE"
           else
-            mapfile -t WRAPPERS < <(
+            mapfile -t PROJECT_DIRS < <(
               find "$GITHUB_WORKSPACE" \
                 -type d -name .git -prune -o \
-                -type f -name gradlew -print
+                -type f \( \
+                  -name settings.gradle \
+                  -o -name settings.gradle.kts \
+                \) -printf '%h\n' | sort -u
             )
 
-            if [ "${#WRAPPERS[@]}" -eq 0 ]; then
-              echo "::error::No gradlew found. Commit the Gradle wrapper files to your repository."
+            if [ "${#PROJECT_DIRS[@]}" -eq 0 ]; then
+              echo "::error::No Gradle settings file found. Upload your complete Android project, not only this workflow."
+              echo "Repository files:"
+              find "$GITHUB_WORKSPACE" -maxdepth 3 -type f \
+                -not -path '*/.git/*'
               exit 1
             fi
 
-            if [ "${#WRAPPERS[@]}" -gt 1 ]; then
-              echo "::error::Multiple Gradle projects found. Specify the Android project directory."
-              printf '%s\n' "${WRAPPERS[@]}"
+            if [ "${#PROJECT_DIRS[@]}" -gt 1 ]; then
+              echo "::error::Multiple Gradle projects found. The Android project directory must be selected explicitly."
+              printf '%s\n' "${PROJECT_DIRS[@]}"
               exit 1
             fi
 
-            PROJECT_DIR="$(dirname "${WRAPPERS[0]}")"
+            PROJECT_DIR="${PROJECT_DIRS[0]}"
           fi
 
           echo "Android project: $PROJECT_DIR"
           echo "dir=$PROJECT_DIR" >> "$GITHUB_OUTPUT"
 
-      - name: Make wrapper executable
-        working-directory: ${{ steps.project.outputs.dir }}
-        run: chmod +x ./gradlew
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
 
       - name: Build debug APK
         working-directory: ${{ steps.project.outputs.dir }}
-        run: ./gradlew assembleDebug --no-daemon
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
@@ -91,7 +103,7 @@ jobs:
           MUSE3_KEYSTORE_PASS: ${{ secrets.MUSE3_KEYSTORE_PASS }}
           MUSE3_KEY_ALIAS: ${{ secrets.MUSE3_KEY_ALIAS }}
           MUSE3_KEY_PASS: ${{ secrets.MUSE3_KEY_PASS }}
-        run: ./gradlew assembleRelease --no-daemon
+        run: gradle :app:assembleRelease --no-daemon --stacktrace
 
       - name: Create draft GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
