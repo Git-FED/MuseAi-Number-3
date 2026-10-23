@@ -79,6 +79,69 @@ jobs:
             exit 1
           fi
 
+      - name: Repair unsupported_message string
+        working-directory: ${{ steps.project.outputs.dir }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          res_dir = Path("app/src/main/res")
+          safe_string = (
+              '<string name="unsupported_message">'
+              'This feature is not supported on this device.'
+              '</string>'
+          )
+
+          pattern = re.compile(
+              r'<string\b'
+              r'(?=[^>]*\bname\s*=\s*["\']unsupported_message["\'])'
+              r'[^>]*(?:/\s*>|>.*?</string\s*>)',
+              re.DOTALL,
+          )
+
+          default_found = False
+
+          for folder in sorted(res_dir.glob("values*")):
+              if not folder.is_dir():
+                  continue
+
+              for path in sorted(folder.glob("*.xml")):
+                  original = path.read_text(encoding="utf-8")
+                  updated, count = pattern.subn(
+                      lambda match: safe_string,
+                      original,
+                  )
+
+                  if count:
+                      path.write_text(updated, encoding="utf-8")
+                      print(f"Repaired {count} entry/entries in {path}")
+
+                      if folder.name == "values":
+                          default_found = True
+
+          if not default_found:
+              values_dir = res_dir / "values"
+              values_dir.mkdir(parents=True, exist_ok=True)
+
+              override = values_dir / "muse_unsupported_message_override.xml"
+
+              if override.exists():
+                  raise SystemExit(
+                      f"Refusing to overwrite existing file: {override}"
+                  )
+
+              override.write_text(
+                  '<?xml version="1.0" encoding="utf-8"?>\n'
+                  '<resources>\n'
+                  f'    {safe_string}\n'
+                  '</resources>\n',
+                  encoding="utf-8",
+              )
+              print(f"Created app-level override: {override}")
+          PY
+
       - name: Build debug APK
         working-directory: ${{ steps.project.outputs.dir }}
         run: gradle :app:assembleDebug --no-daemon --stacktrace
