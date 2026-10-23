@@ -2,14 +2,22 @@ plugins {
     id("com.android.application")
 }
 
-val releaseSigning = listOf("MUSE3_KEYSTORE", "MUSE3_KEYSTORE_PASS", "MUSE3_KEY_ALIAS", "MUSE3_KEY_PASS")
-    .map { name -> name to System.getenv(name) }
-    .toMap()
-val hasReleaseSigning = releaseSigning.values.all { !it.isNullOrBlank() }
+val releaseSigning = listOf(
+    "MUSE3_KEYSTORE",
+    "MUSE3_KEYSTORE_PASS",
+    "MUSE3_KEY_ALIAS",
+    "MUSE3_KEY_PASS"
+).associateWith { name ->
+    System.getenv(name)
+}
+
+val hasReleaseSigning = releaseSigning.values.all {
+    !it.isNullOrBlank()
+}
 
 android {
     namespace = "com.fedos.musenumberthree"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.fedos.musenumberthree"
@@ -27,10 +35,12 @@ android {
     signingConfigs {
         if (hasReleaseSigning) {
             create("museRelease") {
-                storeFile = rootProject.file(releaseSigning.getValue("MUSE3_KEYSTORE")!!)
-                storePassword = releaseSigning.getValue("MUSE3_KEYSTORE_PASS")
-                keyAlias = releaseSigning.getValue("MUSE3_KEY_ALIAS")
-                keyPassword = releaseSigning.getValue("MUSE3_KEY_PASS")
+                storeFile = rootProject.file(
+                    requireNotNull(releaseSigning["MUSE3_KEYSTORE"])
+                )
+                storePassword = releaseSigning["MUSE3_KEYSTORE_PASS"]
+                keyAlias = releaseSigning["MUSE3_KEY_ALIAS"]
+                keyPassword = releaseSigning["MUSE3_KEY_PASS"]
             }
         }
     }
@@ -38,13 +48,19 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            if (hasReleaseSigning) signingConfig = signingConfigs.getByName("museRelease")
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("museRelease")
+            }
         }
     }
 }
 
-// Re-confirm stable dependency versions at build time; dependencies are declared here, never installed by hand.
 dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
