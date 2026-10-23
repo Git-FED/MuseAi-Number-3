@@ -9,43 +9,100 @@ on:
 permissions:
   contents: write
 
-env:
-  ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+
+      - name: Find Android project
+        id: project
+        shell: bash
+        run: |
+          if [ -f "$GITHUB_WORKSPACE/gradlew" ]; then
+            PROJECT_DIR="$GITHUB_WORKSPACE"
+          else
+            mapfile -t WRAPPERS < <(
+              find "$GITHUB_WORKSPACE" \
+                -type d -name .git -prune -o \
+                -type f -name gradlew -print
+            )
+
+            if [ "${#WRAPPERS[@]}" -eq 0 ]; then
+              echo "::error::No gradlew found. Commit the Gradle wrapper files to your repository."
+              exit 1
+            fi
+
+            if [ "${#WRAPPERS[@]}" -gt 1 ]; then
+              echo "::error::Multiple Gradle projects found. Specify the Android project directory."
+              printf '%s\n' "${WRAPPERS[@]}"
+              exit 1
+            fi
+
+            PROJECT_DIR="$(dirname "${WRAPPERS[0]}")"
+          fi
+
+          echo "Android project: $PROJECT_DIR"
+          echo "dir=$PROJECT_DIR" >> "$GITHUB_OUTPUT"
+
       - name: Make wrapper executable
+        working-directory: ${{ steps.project.outputs.dir }}
         run: chmod +x ./gradlew
+
       - name: Build debug APK
-        run: ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v4
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
         with:
           name: muse-number-three-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: ${{ steps.project.outputs.dir }}/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
       - name: Decode signing keystore
         if: startsWith(github.ref, 'refs/tags/v')
-        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > app/release.keystore
+        working-directory: ${{ steps.project.outputs.dir }}
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        shell: bash
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "::error::ANDROID_KEYSTORE_BASE64 secret is missing."
+            exit 1
+          fi
+
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" \
+            | base64 --decode > app/release.keystore
+
       - name: Build signed release APK
         if: startsWith(github.ref, 'refs/tags/v')
+        working-directory: ${{ steps.project.outputs.dir }}
         env:
-          MUSE3_KEYSTORE: app/release.keystore
+          MUSE3_KEYSTORE: ${{ steps.project.outputs.dir }}/app/release.keystore
           MUSE3_KEYSTORE_PASS: ${{ secrets.MUSE3_KEYSTORE_PASS }}
           MUSE3_KEY_ALIAS: ${{ secrets.MUSE3_KEY_ALIAS }}
           MUSE3_KEY_PASS: ${{ secrets.MUSE3_KEY_PASS }}
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease --no-daemon
+
       - name: Create draft GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           draft: true
-          files: app/build/outputs/apk/release/app-release.apk
+          fail_on_unmatched_files: true
+          files: ${{ steps.project.outputs.dir }}/app/build/outputs/apk/release/app-release.apk
+
       - name: Remove keystore
-        if: always()
-        run: rm -f app/release.keystore
+        if: always() && steps.project.outputs.dir != ''
+        env:
+          PROJECT_DIR: ${{ steps.project.outputs.dir }}
+        run: rm -f "$PROJECT_DIR/app/release.keystore"
