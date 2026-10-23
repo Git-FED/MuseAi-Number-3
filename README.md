@@ -1,10 +1,14 @@
 # Muse Number 3
 
+<img width="1281" height="701" alt="Screenshot 2026-10-22 192025" src="https://github.com/user-attachments/assets/ae6deb7b-7387-4f06-8d14-4069601d4b2a" />
+
 **Three separate Muse sessions, one small Android app.**
 
 > Keep three Muse logins in their own spaces, then switch between them without the browser-tab circus.
 
 **Status:** unreleased scaffold · **Version:** `0.1.0` · **Platform:** Android, `minSdk 26` · **Build:** GitHub Actions workflow included
+
+<img width="1285" height="699" alt="Screenshot 2026-10-23 153917" src="https://github.com/user-attachments/assets/f8f5e739-f7d7-4270-ba48-f730646e474b" />
 
 ## Why this exists
 
@@ -13,6 +17,8 @@ When three Muse accounts live in one browser, it is easy to lose track of which 
 Muse Number 3 makes the boundary explicit: one Android app, three named WebView slots, three AndroidX WebKit Multi-Profile sessions. Each slot owns its own cookies and web storage. Switching changes visibility, not the page underneath, so a chat can stay open while you move to another slot.
 
 That separation is intentional. If a device cannot provide WebView Multi-Profile support, the app stops at an unsupported-device screen instead of silently merging sessions.
+
+<img width="1284" height="700" alt="Screenshot 2026-10-23 153928" src="https://github.com/user-attachments/assets/f02627aa-2091-491e-8f20-e27aedd1258b" />
 
 ## See it work
 
@@ -29,6 +35,8 @@ python3 -m http.server 8000 --directory site
 
 The fastest code path to the Android behavior is [`SlotConfig.kt`](app/src/main/java/com/fedos/musenumberthree/SlotConfig.kt), which is the single source of truth for the three labels, URLs, and profile names. The release-critical manual scenario is documented in [`docs/QA.md`](docs/QA.md).
 
+<img width="720" height="1600" alt="Screenshot_20261023-160000" src="https://github.com/user-attachments/assets/4aca49d2-2726-483b-b027-0ea050dd7994" />
+
 ## Screenshots
 
 These are rendered captures of the checked-in static promo page, served locally from `site/`—not mockups of the Android app.
@@ -36,6 +44,8 @@ These are rendered captures of the checked-in static promo page, served locally 
 | The first impression | Separate sessions | Switch with a tap |
 | --- | --- | --- |
 | ![Muse Number 3 promo page hero with three browser-window characters around a phone](assets/demo/promo-home.webp) | ![Muse Number 3 promo page section explaining separate slots and separate sessions](assets/demo/separate-sessions.webp) | ![Muse Number 3 promo page section showing a phone with three switchable slots](assets/demo/slot-switching.webp) |
+
+<img width="1284" height="699" alt="Screenshot 2026-10-22 192032" src="https://github.com/user-attachments/assets/c3c9d476-f462-4342-a963-ab45e841667c" />
 
 ## Quick start
 
@@ -66,6 +76,8 @@ app/build/outputs/apk/debug/app-debug.apk
 
 There is no published download yet. Release signing and the tag-based CI release flow are documented in [`docs/SIGNING.md`](docs/SIGNING.md).
 
+<img width="1280" height="688" alt="Screenshot 2026-10-23 112719" src="https://github.com/user-attachments/assets/107e20ca-7d8b-4320-8336-c6fa0fc9cb33" />
+
 ### Test
 
 There are no automated tests in v1. The important test is manual because it requires three real logins on a WebView provider that supports Multi-Profile:
@@ -78,6 +90,8 @@ There are no automated tests in v1. The important test is manual because it requ
 ```
 
 Use the complete checklist in [`docs/QA.md`](docs/QA.md), including swipe switching, launcher shortcuts, rotation, relaunch, logout isolation, and the unsupported-device path.
+
+<img width="1284" height="696" alt="Screenshot 2026-10-23 112738" src="https://github.com/user-attachments/assets/550b9452-892d-403c-90b1-65bbd7c4f2a9" />
 
 ## How the app works
 
@@ -96,6 +110,8 @@ SlotDef(3, "Muse 3", "https://muse.ai", "muse-slot-3")
 
 Those three URLs are placeholders, not three distinct production instances.
 
+<img width="1280" height="697" alt="Screenshot 2026-10-23 112711" src="https://github.com/user-attachments/assets/866c3401-6363-4510-802e-f477b28afc67" />
+
 ## Project map
 
 ```text
@@ -113,14 +129,21 @@ docs/SESSION-BEHAVIOR.md     Profile and persistence invariants
 .github/workflows/build.yml  Debug CI and draft release workflow
 ```
 
+<img width="1284" height="701" alt="Screenshot 2026-10-23 112731" src="https://github.com/user-attachments/assets/3e061924-b153-4515-9f00-612d964b7a3f" />
+
 ## Deployment notes
 
 The static promo page can be published from `site/` as-is, or from the repository root through the forwarding [`index.html`](index.html). For Cloudflare Pages Git integration, use `exit 0` as the build command and `site` as the build output directory. For a direct upload, run `./scripts/deploy-pages.sh` (equivalent to `npx wrangler pages deploy site`). Do not use `npx wrangler deploy`; that is the Worker command and is what causes a missing Worker entry-point error here. GitHub Pages is **not enabled automatically**: there is no Pages workflow in this repository. Full instructions are in [`site/DEPLOYMENT.md`](site/DEPLOYMENT.md).
 
 Before publishing the site, configure only public destinations in [`site/config.js`](site/config.js). Discord and payment destinations are blank by default, and payment controls remain hidden until a valid HTTPS destination and age-gate flow are configured.
 
+<img width="1281" height="702" alt="Screenshot 2026-10-23 112745" src="https://github.com/user-attachments/assets/36a93183-1564-4851-bf00-06c7d675ba1b" />
+
 ## License and support
 
 The checked-in [`LICENSE`](LICENSE) is a proprietary draft and says its terms are still to be finalized. Treat the project as all rights reserved until the owner replaces that draft with final terms.
 
 Questions and support: **museai@fedpromptly.com**
+
+<img width="1277" height="696" alt="Screenshot 2026-10-23 153939" src="https://github.com/user-attachments/assets/b03cbcb5-5bd8-44ee-862a-6a5b764f933b" />
+
