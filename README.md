@@ -143,3 +143,6 @@ Before publishing the site, configure only public destinations in [`site/config.
 The checked-in [`LICENSE`](LICENSE) is a proprietary draft and says its terms are still to be finalized. Treat the project as all rights reserved until the owner replaces that draft with final terms.
 
 Questions and support: **museai@fedpromptly.com**
+
+<img width="1281" height="702" alt="Screenshot 2026-10-23 112745" src="https://github.com/user-attachments/assets/176a8179-6acc-4645-85e1-ebb08a61c222" />
+
