@@ -1,5 +1,7 @@
 # Muse Number 3
 
+<img width="1281" height="701" alt="Screenshot 2026-10-22 192025" src="https://github.com/user-attachments/assets/7c20d5c7-a491-4a20-9935-75056afc1a60" />
+
 **Three separate Muse sessions, one small Android app.**
 
 > Keep three Muse logins in their own spaces, then switch between them without the browser-tab circus.
@@ -8,11 +10,15 @@
 
 ## Why this exists
 
+<img width="1284" height="699" alt="Screenshot 2026-10-22 192032" src="https://github.com/user-attachments/assets/12fecd23-2411-4aee-99c5-7fd4dd9be9fd" />
+
 When three Muse accounts live in one browser, it is easy to lose track of which session is active. Cookies, open chats, and account state all end up competing for the same space. Switching becomes a memory test instead of a useful workflow.
 
 Muse Number 3 makes the boundary explicit: one Android app, three named WebView slots, three AndroidX WebKit Multi-Profile sessions. Each slot owns its own cookies and web storage. Switching changes visibility, not the page underneath, so a chat can stay open while you move to another slot.
 
 That separation is intentional. If a device cannot provide WebView Multi-Profile support, the app stops at an unsupported-device screen instead of silently merging sessions.
+
+<img width="1281" height="698" alt="Screenshot 2026-10-22 195208" src="https://github.com/user-attachments/assets/22ab6c72-e5b0-4f3a-99d0-1936373e9bd5" />
 
 ## See it work
 
