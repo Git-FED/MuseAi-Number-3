@@ -1,7 +1,5 @@
 # Muse Number 3
 
-<img width="1281" height="701" alt="Screenshot 2026-10-22 192025" src="https://github.com/user-attachments/assets/0a9f9d6a-c4e7-4308-adb3-70ba4f316968" />
-
 **Three separate Muse sessions, one small Android app.**
 
 > Keep three Muse logins in their own spaces, then switch between them without the browser-tab circus.
@@ -112,6 +110,7 @@ site/                        Static promo page and local illustrations
 assets/demo/                 Real rendered promo-page screenshots and GIF
 scripts/build.sh             Debug APK build helper
 scripts/install-deps.sh      Prerequisite check only
+scripts/deploy-pages.sh      Cloudflare Pages direct-upload helper
 docs/QA.md                   Manual release checklist
 docs/SIGNING.md              Release keystore and CI signing rules
 docs/SESSION-BEHAVIOR.md     Profile and persistence invariants
@@ -120,7 +119,7 @@ docs/SESSION-BEHAVIOR.md     Profile and persistence invariants
 
 ## Deployment notes
 
-The static promo page can be published from `site/` as-is, or from the repository root through the forwarding [`index.html`](index.html). GitHub Pages is **not enabled automatically**: there is no Pages workflow in this repository. Cloudflare Pages and branch-based GitHub Pages instructions are in [`site/DEPLOYMENT.md`](site/DEPLOYMENT.md).
+The static promo page can be published from `site/` as-is, or from the repository root through the forwarding [`index.html`](index.html). For Cloudflare Pages Git integration, use `exit 0` as the build command and `site` as the build output directory. For a direct upload, run `./scripts/deploy-pages.sh` (equivalent to `npx wrangler pages deploy site`). Do not use `npx wrangler deploy`; that is the Worker command and is what causes a missing Worker entry-point error here. GitHub Pages is **not enabled automatically**: there is no Pages workflow in this repository. Full instructions are in [`site/DEPLOYMENT.md`](site/DEPLOYMENT.md).
 
 Before publishing the site, configure only public destinations in [`site/config.js`](site/config.js). Discord and payment destinations are blank by default, and payment controls remain hidden until a valid HTTPS destination and age-gate flow are configured.
 

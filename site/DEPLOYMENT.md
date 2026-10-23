@@ -2,13 +2,30 @@
 
 This page is plain HTML, CSS, JavaScript, and local assets. It has no server runtime, package manager, build step, database, or environment variables. All site links and local assets are relative so the bundle can be served from a project subpath as well as a domain root.
 
+The archive includes a top-level `index.html` that forwards to `site/`. That makes the promo page discoverable when a static host publishes the repository root. The actual page and its assets remain in `site/`.
+
 ## Cloudflare Pages with GitHub as the source
 
-Connect the repository to Cloudflare Pages and point the static project at the `site/` directory. Select the no-framework/static configuration and publish the files in that directory as-is; there is no install or build command. The site entry point is `site/index.html`. The `_headers` file supplies static response headers to Cloudflare Pages. No Worker code is required for the landing page. If using Workers with static assets instead, configure `site/` as the assets directory and route the static assets normally.
+Set the Pages project to use:
+
+- **Build command:** `exit 0`
+- **Build output directory:** `site`
+
+There is no install or build step. Pages can publish the checked-in files directly. Do **not** use `npx wrangler deploy` here; that is the Worker deployment command and produces the “Missing entry-point to Worker script or to assets directory” error for this repository. The `_headers` file inside `site/` supplies static response headers.
+
+For a direct upload from a configured Wrangler session, run:
+
+```sh
+./scripts/deploy-pages.sh
+# equivalent:
+npx wrangler pages deploy site
+```
+
+The first direct upload may ask for the Cloudflare Pages project name and production branch. No Worker code is required for the landing page.
 
 ## Native GitHub Pages
 
-The same files can be published as a Pages artifact from a GitHub Actions workflow by uploading the contents of `site/`. A deployment workflow is intentionally not included, so adding this site to a repository will not silently enable automatic publishing. GitHub Pages does not interpret Cloudflare's `_headers` file; it is harmless as a static file. `.nojekyll` is included for static-file compatibility.
+For branch-based publishing from the repository root, the top-level `index.html` forwards to the working page in `site/`; `.nojekyll` is at the repository root. If you instead publish a Pages artifact from GitHub Actions, upload the contents of `site/` directly. A deployment workflow is intentionally not included, so adding this site to a repository will not silently enable automatic publishing. GitHub Pages ignores Cloudflare's `_headers` files.
 
 ## Before publishing
 
